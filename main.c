@@ -1,46 +1,51 @@
 #include "raylib.h"
+#include "enemy.h"
+#include "player.h"
 
 int main(void)
 {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = 2500;
+    const int screenHeight = 1800;
 
-    InitWindow(screenWidth, screenHeight, "My First Raylib Game");
+    InitWindow(
+        screenWidth, 
+        screenHeight, 
+        "My First Raylib Game"
+    );
 
-    SetTargetFPS(60);
+    SetTargetFPS(240);
 
     Vector2 player = {
         screenWidth / 2,
         screenHeight / 2
     };
 
+    Vector2 enemy = {
+        screenWidth / 4,
+        screenHeight / 4
+    };
+
+    Vector2 enemyDirection = {
+        1,
+        0
+    };
+
     while (!WindowShouldClose())
     {
         // Update
-        if (IsKeyDown(KEY_RIGHT))
-            player.x += 5;
-
-        if (IsKeyDown(KEY_LEFT))
-            player.x -= 5;
-
-        if (IsKeyDown(KEY_DOWN))
-            player.y += 5;
-
-        if (IsKeyDown(KEY_UP))
-            player.y -= 5;
-
+        UpdatePlayer(&player);
 
         // Draw
         BeginDrawing();
 
             ClearBackground(BLACK);
 
-            DrawCircleV(player, 20, RED);
+            DrawPlayer(player);
+            DrawEnemy(enemy, enemyDirection);
 
         EndDrawing();
     }
 
     CloseWindow();
-
     return 0;
 }
